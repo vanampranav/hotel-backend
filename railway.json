@@ -7,15 +7,14 @@
   "deploy": {
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
-    "healthcheckPath": "/actuator/health",
-    "healthcheckTimeout": 600,
+    "healthcheckDisabled": true,
     "numReplicas": 1,
     "startCommand": "sh -c 'echo \"Starting application...\" && /app/startup.sh'",
-    "healthcheckPort": 8080,
     "ports": [
       {
         "containerPort": 8080,
-        "protocol": "tcp"
+        "protocol": "tcp",
+        "published": true
       }
     ]
   }
