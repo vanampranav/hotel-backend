@@ -54,7 +54,8 @@ tasks.named('test') {
 
 // Create a fat JAR with all dependencies
 bootJar {
-	archiveClassifier.set('all')
+	archiveClassifier.set('')
+	archiveFileName = 'HotelManagement.jar'
 }
 
 // This will make the bootJar task run when using the 'build' task
