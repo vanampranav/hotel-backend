@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/hotels")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS}, allowCredentials = "false")
 public class HotelController {
     private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
     private final HotelService hotelService;
