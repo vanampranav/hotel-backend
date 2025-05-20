@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/HotelManagement.jar 
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/HotelManagement.jar --spring.profiles.active=prod 
