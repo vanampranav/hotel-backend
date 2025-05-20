@@ -6,10 +6,16 @@
   },
   "deploy": {
     "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10,
+    "restartPolicyMaxRetries": 5,
     "healthcheckDisabled": true,
     "numReplicas": 1,
-    "startCommand": "sh -c 'echo \"Starting application...\" && /app/startup.sh'",
+    "startCommand": "sh -c '/app/startup.sh'",
+    "sleepApplication": false,
+    "restartPolicyDelaySeconds": 10,
+    "resources": {
+      "cpu": "250m",
+      "memory": "512Mi"
+    },
     "ports": [
       {
         "containerPort": 8080,

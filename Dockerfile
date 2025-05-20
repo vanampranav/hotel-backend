@@ -12,12 +12,17 @@ RUN apk add --no-cache curl iputils
 
 # Environment variables with defaults
 ENV PORT=8080
-ENV JAVA_OPTS=""
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
-# Expose the port - use both fixed port and variable
+# Expose the port
 EXPOSE 8080
 
-# Add a startup script to help with debugging
+# Create simple healthcheck endpoint 
+RUN mkdir -p /app/public && \
+    echo '{"status":"UP"}' > /app/public/health.json && \
+    echo '<!DOCTYPE html><html><body><h1>Hotel Management API</h1><p>Service is running</p></body></html>' > /app/public/index.html
+
+# Add a startup script
 RUN echo '#!/bin/sh' > /app/startup.sh && \
     echo 'echo "Starting application with port: $PORT"' >> /app/startup.sh && \
     echo 'echo "Java options: $JAVA_OPTS"' >> /app/startup.sh && \
@@ -26,10 +31,8 @@ RUN echo '#!/bin/sh' > /app/startup.sh && \
     echo 'ls -la /app' >> /app/startup.sh && \
     echo 'echo "Network interfaces:"' >> /app/startup.sh && \
     echo 'ip addr || ifconfig || echo "No network tools available"' >> /app/startup.sh && \
-    echo 'echo "Checking localhost connectivity:"' >> /app/startup.sh && \
-    echo 'timeout 2 curl -v http://localhost:8080/ || echo "Cannot connect to localhost"' >> /app/startup.sh && \
-    echo 'echo "Starting application..."' >> /app/startup.sh && \
-    echo 'java -jar $JAVA_OPTS -Dserver.address=0.0.0.0 -Dserver.port=8080 -Dspring.profiles.active=prod /app/app.jar' >> /app/startup.sh && \
+    echo 'echo "Starting Spring Boot application in foreground mode"' >> /app/startup.sh && \
+    echo 'java -jar $JAVA_OPTS -Dserver.address=0.0.0.0 -Dserver.port=8080 -Dspring.profiles.active=prod -XX:+CrashOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp /app/app.jar' >> /app/startup.sh && \
     chmod +x /app/startup.sh
 
 ENTRYPOINT ["/app/startup.sh"] 
