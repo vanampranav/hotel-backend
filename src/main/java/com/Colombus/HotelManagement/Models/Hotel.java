@@ -23,7 +23,7 @@ public class Hotel {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String mobilePhoneContact;
 
     @Column(unique = true)
@@ -34,4 +34,37 @@ public class Hotel {
 
     private boolean preferred;  // To mark preferred hotels
 
+    @Column
+    private String website;
+    
+    @Column(nullable = false)
+    private String city;
+    
+    @Column(nullable = false)
+    private String state;
+
+    // Getters and Setters
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }
